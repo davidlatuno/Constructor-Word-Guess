@@ -12,7 +12,7 @@ function Word(answer) {
     this.log = function () {
         answerLog = "";
         for (var i = 0; i < this.objArray.length; i++) {
-            answerLog += this.objArray[i].print() + " ";
+            answerLog += this.objArray[i] + " ";
         }
         console.log(answerLog + "\n");
     }

@@ -1,7 +1,7 @@
 function Letter(value) {
     this.letter = value;
     this.guessed = false;
-    this.print = function () {
+    this.toString = function () {
         // Added functionality for computer Guess with more than one word
         if (this.letter === " ") {
             this.guessed = true;
