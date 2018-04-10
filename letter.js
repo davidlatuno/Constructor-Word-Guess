@@ -3,9 +3,9 @@ function Letter(value) {
     this.guessed = false;
     this.print = function() {
         if (this.guessed === false) {
-            console.log("_");
+            return "_";
         } else {
-            console.log(this.letter);
+            return this.letter;
         }
     };
     this.guess = function(guess) {
@@ -15,10 +15,4 @@ function Letter(value) {
     }
 }
 
-var a = new Letter("a");
-
-a.print();
-a.guess("b");
-a.print();
-a.guess("a");
-a.print();
+exports.Letter = Letter;
