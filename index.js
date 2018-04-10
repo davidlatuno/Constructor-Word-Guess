@@ -89,6 +89,10 @@ function hangman() {
                         // Print guesses left
                         console.log("Guesses Left: " + guessesLeft + "\n");
 
+                        // Print letters guessed already
+                        console.log ("Letters Guessed: " + lettersGuessed.join(" ") + "\n");
+
+                        // Check if there are guesses left
                         if (guessesLeft > 0) {
                             // Call function again till word is complete
                             hangman();
