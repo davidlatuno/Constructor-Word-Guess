@@ -18,13 +18,15 @@ computerWord = new Word.Word(randomWord);
 var needNewWord = false;
 
 // Array for guessed letters
-var lettersGuessed = [];
+var incorrectLetters = [];
+var correctLetters = [];
 
 // Guesses left
 var guessesLeft = 10;
 
 function hangman() {
 
+    // if needNewWord is true generate new word for Word constructor
     if (needNewWord) {
         // Pick Random index from state array
         var randomIndex = Math.floor(Math.random() * state.length);
@@ -54,19 +56,17 @@ function hangman() {
             ])
             .then(function (input) {
 
+                // User Validation for multiples or not a letter
                 if (!letter.includes(input.userinput) || input.userinput.length > 1) {
                     console.log("\nNot a Letter or too many inputs\n");
                     hangman();
                 } else {
 
                     // User Validation to not be able enter same letters more than once and only one letter at a time
-                    if (lettersGuessed.includes(input.userinput) || input.userinput === "") {
+                    if (incorrectLetters.includes(input.userinput) || correctLetters.includes(input.userinput) || input.userinput === "") {
                         console.log("\nAlready Guessed or Nothing Entered\n");
                         hangman();
                     } else {
-
-                        // Add guessed letter to array
-                        lettersGuessed.push(input.userinput);
 
                         // Compare with word complete to see if a guess was correct
                         var wordCheckArray = [];
@@ -78,9 +78,13 @@ function hangman() {
                         computerWord.objArray.forEach(wordCheck);
                         if (wordCheckArray.join('') === wordComplete.join('')) {
                             console.log("\nIncorrect\n");
+                            // Add guessed letter to incorrect array
+                            incorrectLetters.push(input.userinput);
                             guessesLeft--;
                         } else {
                             console.log("\nCorrect!\n");
+                            // Add guessed letter to correct array
+                            correctLetters.push(input.userinput);
                         }
 
                         // Print the word to terminal
@@ -90,7 +94,7 @@ function hangman() {
                         console.log("Guesses Left: " + guessesLeft + "\n");
 
                         // Print letters guessed already
-                        console.log ("Letters Guessed: " + lettersGuessed.join(" ") + "\n");
+                        console.log("Letters Guessed: " + incorrectLetters.join(" ") + "\n");
 
                         // Check if there are guesses left
                         if (guessesLeft > 0) {
@@ -125,24 +129,25 @@ function hangman() {
 
 function restartGame() {
     inquirer
-            .prompt([
-                {
-                    type: "list",
-                    message: "Would you like to:",
-                    choices: ["Play Again", "Exit"],
-                    name: "restart"
-                }
-            ])
-            .then(function (input) {
-                if (input.restart === "Play Again") {
-                    needNewWord = true;
-                    lettersGuessed = [];
-                    guessesLeft = 10;
-                    hangman();
-                } else {
-                    return
-                }
-            })
+        .prompt([
+            {
+                type: "list",
+                message: "Would you like to:",
+                choices: ["Play Again", "Exit"],
+                name: "restart"
+            }
+        ])
+        .then(function (input) {
+            if (input.restart === "Play Again") {
+                needNewWord = true;
+                incorrectLetters = [];
+                correctLetters = [];
+                guessesLeft = 10;
+                hangman();
+            } else {
+                return
+            }
+        })
 }
 
 hangman();
