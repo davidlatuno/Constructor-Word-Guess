@@ -6,18 +6,17 @@ function Word(answer) {
         var letter = new Letter.Letter(answer[i]);
         this.objArray.push(letter);
     }
-    this.log = function() {
+    this.log = function () {
         answerLog = "";
         for (var i = 0; i < this.objArray.length; i++) {
             answerLog += this.objArray[i].print() + " ";
         }
-        console.log(answerLog);
+        console.log("\n" + answerLog);
     }
-    this.userGuess = function(input) {
+    this.userGuess = function (input) {
         for (var i = 0; i < this.objArray.length; i++) {
             this.objArray[i].guess(input);
         }
-        
     }
 }
 
