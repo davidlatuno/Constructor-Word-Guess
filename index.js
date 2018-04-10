@@ -3,7 +3,7 @@ var Word = require("./word.js");
 var inquirer = require("inquirer");
 
 // Used with user validation to only enter letters
-var letter = "abcdefghijklmnopqrstuvwxyz";
+var letterArray = "abcdefghijklmnopqrstuvwxyz";
 
 // List of words to choose from
 var state = ["alabama", "alaska", "arizona", "arkansas", "california", "colorado", "connecticut", "delaware", "florida", "georgia", "hawaii", "idaho", "illinois", "indiana", "iowa", "kansas", "kentucky", "louisiana", "maine", "maryland", "massachusetts", "michigan", "minnesota", "mississippi", "missouri", "montana", "nebraska", "nevada", "new hampshire", "new jersey", "new mexico", "new york", "north carolina", "north dakota", "ohio", "oklahoma", "oregon", "pennsylvania", "rhode island", "south carolina", "south dakota", "tennessee", "texas", "utah", "vermont", "virginia", "washington", "west virginia", "wisconsin", "wyoming"];
@@ -13,7 +13,7 @@ var randomIndex = Math.floor(Math.random() * state.length);
 var randomWord = state[randomIndex];
 
 // Pass random word through Word constructor
-computerWord = new Word.Word(randomWord);
+computerWord = new Word(randomWord);
 
 var needNewWord = false;
 
@@ -33,7 +33,7 @@ function hangman() {
         var randomWord = state[randomIndex];
 
         // Pass random word through Word constructor
-        computerWord = new Word.Word(randomWord);
+        computerWord = new Word(randomWord);
 
         // Turn off Generator
         needNewWord = false;
@@ -57,7 +57,7 @@ function hangman() {
             .then(function (input) {
 
                 // User Validation for multiples or not a letter
-                if (!letter.includes(input.userinput) || input.userinput.length > 1) {
+                if (!letterArray.includes(input.userinput) || input.userinput.length > 1) {
                     console.log("\nNot a Letter or too many inputs\n");
                     hangman();
                 } else {

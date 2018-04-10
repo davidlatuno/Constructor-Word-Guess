@@ -22,4 +22,4 @@ function Letter(value) {
     }
 }
 
-exports.Letter = Letter;
+module.exports = Letter;

@@ -5,7 +5,7 @@ function Word(answer) {
     this.objArray = [];
     // Split passed word into Letter objects and push into above array
     for (var i = 0; i < answer.length; i++) {
-        var letter = new Letter.Letter(answer[i]);
+        var letter = new Letter(answer[i]);
         this.objArray.push(letter);
     }
     // Print word to console (using Letter methods some may be hidden if not guessed yet)
@@ -24,4 +24,4 @@ function Word(answer) {
     }
 }
 
-exports.Word = Word;
+module.exports = Word;
