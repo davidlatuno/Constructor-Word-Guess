@@ -20,6 +20,9 @@ var needNewWord = false;
 // Array for guessed letters
 var lettersGuessed = [];
 
+// Guesses left
+var guessesLeft = 10;
+
 function hangman() {
 
     if (needNewWord) {
@@ -75,6 +78,7 @@ function hangman() {
                         computerWord.objArray.forEach(wordCheck);
                         if (wordCheckArray.join('') === wordComplete.join('')) {
                             console.log("\nIncorrect\n");
+                            guessesLeft--;
                         } else {
                             console.log("\nCorrect!\n");
                         }
@@ -82,8 +86,18 @@ function hangman() {
                         // Print the word to terminal
                         computerWord.log();
 
-                        // Call function again till word is complete
-                        hangman();
+                        // Print guesses left
+                        console.log("Guesses Left: " + guessesLeft + "\n");
+
+                        if (guessesLeft > 0) {
+                            // Call function again till word is complete
+                            hangman();
+                        } else {
+                            console.log("YOU LOSE!\n");
+
+                            restartGame();
+                        }
+
 
                         // Function used with wordCheckArray forEach
                         function wordCheck(key) {
@@ -95,7 +109,18 @@ function hangman() {
     } else {
         console.log("YOU WIN!\n");
 
-        inquirer
+        restartGame();
+    }
+
+    // Function used with wordComplete forEach
+    function completeCheck(key) {
+        wordComplete.push(key.guessed);
+    }
+
+}
+
+function restartGame() {
+    inquirer
             .prompt([
                 {
                     type: "list",
@@ -108,17 +133,12 @@ function hangman() {
                 if (input.restart === "Play Again") {
                     needNewWord = true;
                     lettersGuessed = [];
+                    guessesLeft = 10;
                     hangman();
                 } else {
                     return
                 }
             })
-    }
-    // Function used with wordComplete forEach
-    function completeCheck(key) {
-        wordComplete.push(key.guessed);
-    }
-
 }
 
 hangman();
