@@ -13,12 +13,28 @@ var randomIndex = Math.floor(Math.random() * state.length);
 var randomWord = state[randomIndex];
 
 // Pass random word through Word constructor
-var computerWord = new Word.Word(randomWord);
+computerWord = new Word.Word(randomWord);
+
+var needNewWord = false;
 
 // Array for guessed letters
 var lettersGuessed = [];
 
 function hangman() {
+
+    if (needNewWord) {
+        // Pick Random index from state array
+        var randomIndex = Math.floor(Math.random() * state.length);
+        var randomWord = state[randomIndex];
+
+        // Pass random word through Word constructor
+        computerWord = new Word.Word(randomWord);
+
+        // Turn off Generator
+        needNewWord = false;
+    }
+
+
     // Variable and function used to test if a letter guessed is correct
     var wordComplete = [];
     computerWord.objArray.forEach(completeCheck);
@@ -54,8 +70,6 @@ function hangman() {
 
                         // Run guess through word constructor method to check if word includes use letter
                         computerWord.userGuess(input.userinput);
-                        // Print the word to terminal
-                        computerWord.log();
 
                         // Compare with word complete to see if a guess was correct
                         computerWord.objArray.forEach(wordCheck);
@@ -64,6 +78,9 @@ function hangman() {
                         } else {
                             console.log("\nCorrect!\n");
                         }
+
+                        // Print the word to terminal
+                        computerWord.log();
 
                         // Call function again till word is complete
                         hangman();
@@ -77,6 +94,25 @@ function hangman() {
             })
     } else {
         console.log("YOU WIN!\n");
+
+        inquirer
+            .prompt([
+                {
+                    type: "list",
+                    message: "Would you like to:",
+                    choices: ["Play Again", "Exit"],
+                    name: "restart"
+                }
+            ])
+            .then(function (input) {
+                if (input.restart === "Play Again") {
+                    needNewWord = true;
+                    lettersGuessed = [];
+                    hangman();
+                } else {
+                    return
+                }
+            })
     }
     // Function used with wordComplete forEach
     function completeCheck(key) {

@@ -11,7 +11,7 @@ function Word(answer) {
         for (var i = 0; i < this.objArray.length; i++) {
             answerLog += this.objArray[i].print() + " ";
         }
-        console.log("\n" + answerLog);
+        console.log(answerLog + "\n");
     }
     this.userGuess = function (input) {
         for (var i = 0; i < this.objArray.length; i++) {
